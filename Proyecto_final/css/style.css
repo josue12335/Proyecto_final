@@ -2,7 +2,7 @@
    VARIABLES Y RESET
    =================================== */
 
-:root {
+   :root {
     --bg-base:        #0a0a0e;
     --bg-surface:     #0f0f15;
     --bg-card:        #13131a;
@@ -82,19 +82,21 @@ header {
 }
 
 .logo-icon {
-    width: 34px;
-    height: 34px;
-    background: var(--accent-dim);
+    width: 42px;
+    height: 42px;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    overflow: hidden;
+    background: transparent;
 }
 
-.logo-icon svg {
-    width: 18px;
-    height: 18px;
+.logo-icon img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
 }
 
 .logo-text {
@@ -299,6 +301,22 @@ nav a.active {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 500;
+}
+
+/* Imagen hero */
+.hero-image {
+    flex: 1;
+    text-align: center;
+    max-width: 480px;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 460px;
+    height: auto;
+    border-radius: var(--radius-xl);
+    display: block;
+    margin: 0 auto;
 }
 
 /* Pastillas de estado hero */
@@ -815,3 +833,4 @@ footer a:hover {
         gap: 0.4rem;
     }
 }
+
