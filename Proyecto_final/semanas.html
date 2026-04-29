@@ -3,126 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semanas - Proyecto 16 Semanas</title>
+    <title>Semanas — Proyecto 16 Semanas</title>
     <link rel="stylesheet" href="css/style.css">
+    
+   
 </head>
 <body>
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="logo.png" alt="Logo">
-                <style>
-  .logo img, .logo-icon img { width: 40px !important; height: 40px !important; max-width: 40px !important; }
-</style>
-                <span class="logo-text">Mi Proyecto</span>
+                <div class="logo-icon"><img src="logo.png" alt="Logo"></div>
+                <span class="logo-text">Proyecto <span>16 Semanas</span></span>
             </div>
             <nav>
                 <ul>
-                    <!-- nada -->
                     <li><a href="index.html">Inicio</a></li>
-                    <!-- nada -->
-                    <li><a href="semanas.html">Semanas</a></li>
-                    <!-- nada -->
+                    <li><a href="semanas.html" class="active">Semanas</a></li>
                     <li><a href="about.html">Acerca de mí</a></li>
                 </ul>
             </nav>
         </div>
+        <div class="header-progress"><div class="header-progress-fill"></div></div>
     </header>
 
     <main>
-        <div class="container">
+        <div class="section">
             <h1>Mis 16 Semanas</h1>
-            <p>
-                Explora cada una de las 16 semanas de mi proyecto. Haz clic en cualquier semana para ver
-                los detalles, aprendizajes y proyectos realizados.
-            </p>
+            <p>Organizadas en 4 unidades temáticas. Haz clic en cualquier semana para ver sus detalles, archivos de GitHub y proyectos.</p>
 
-            <div class="semanas-grid">
-
-                <a href="semanas/semana1/index.html" class="semana-card">
-                    <h3>Semana 1</h3>
-                    <p>Inicio del Proyecto</p>
-                </a>
-                
-                <a href="semanas/semana2/index.html" class="semana-card">
-                    <h3>Semana 2</h3>
-                    <p>Fundamentos HTML</p>
-                </a>
-                
-                <a href="https://github.com/josue12335/Proyecto_final/tree/main/Proyecto_final/semanas/semana3" class="semana-card" target="_blank">
-                    <h3>Semana 3</h3>
-                    <p>CSS y Diseño</p>
-                </a>
-                
-                <a href="semanas/semana4/index.html" class="semana-card">
-                    <h3>Semana 4</h3>
-                    <p>JavaScript Básico</p>
-                </a>
-                
-                <a href="semanas/semana5/index.html" class="semana-card">
-                    <h3>Semana 5</h3>
-                    <p>Eventos en JavaScript</p>
-                </a>
-                
-                <a href="semanas/semana6/index.html" class="semana-card">
-                    <h3>Semana 6</h3>
-                    <p>DOM y Manipulación</p>
-                </a>
-                
-                <a href="semanas/semana7/index.html" class="semana-card">
-                    <h3>Semana 7</h3>
-                    <p>Proyecto Integrador</p>
-                </a>
-                
-                <a href="semanas/semana8/index.html" class="semana-card">
-                    <h3>Semana 8</h3>
-                    <p>APIs</p>
-                </a>
-                
-                <a href="semanas/semana9/index.html" class="semana-card">
-                    <h3>Semana 9</h3>
-                    <p>React</p>
-                </a>
-                
-                <a href="semanas/semana10/index.html" class="semana-card">
-                    <h3>Semana 10</h3>
-                    <p>Componentes</p>
-                </a>
-                
-                <a href="semanas/semana11/index.html" class="semana-card">
-                    <h3>Semana 11</h3>
-                    <p>Hooks</p>
-                </a>
-                
-                <a href="semanas/semana12/index.html" class="semana-card">
-                    <h3>Semana 12</h3>
-                    <p>Proyecto</p>
-                </a>
-                
-                <a href="semanas/semana13/index.html" class="semana-card">
-                    <h3>Semana 13</h3>
-                    <p>Base de Datos</p>
-                </a>
-                
-                <a href="semanas/semana14/index.html" class="semana-card">
-                    <h3>Semana 14</h3>
-                    <p>Backend</p>
-                </a>
-                
-                <a href="semanas/semana15/index.html" class="semana-card">
-                    <h3>Semana 15</h3>
-                    <p>Deploy</p>
-                </a>
-                
-                <a href="semanas/semana16/index.html" class="semana-card">
-                    <h3>Semana 16</h3>
-                    <p>Final</p>
-                </a>
-                
+            <!-- Barra de progreso general -->
+            <div style="margin: 1.5rem 0 2.5rem;">
+                <div class="progress-label">
+                    <span>Progreso general</span>
+                    <span>9 / 16 semanas completadas</span>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width:56.25%;"></div>
+                </div>
             </div>
 
-            <p style="margin-top: 3rem; text-align: center;">
-                <a href="index.html" class="btn">Volver al Inicio</a>
+            <!-- UNIDAD 1 -->
+            <div class="unit-section unit-1">
+                <div class="unit-header">
+                    <div class="unit-number">1</div>
+                    <div class="unit-info">
+                        <h2>Fundamentos Web</h2>
+                        <p>Semanas 1–4 · HTML5, CSS3, JavaScript básico</p>
+                    </div>
+                    <span class="unit-weeks">Sem 1–4</span>
+                </div>
+                <div class="semanas-grid">
+                    <a href="semanas/semana1/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 01</span><span class="card-badge completada">Completa</span></div>
+                        <h3>Inicio del Proyecto</h3>
+                        <p>Estructura inicial, herramientas y primeros pasos.</p>
+                        <div class="card-footer"><span class="card-tag">HTML</span></div>
+                    </a>
+                    <a href="semanas/semana2/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 02</span><span class="card-badge completada">Completa</span></div>
+                        <h3>Fundamentos HTML</h3>
+                        <p>Semántica HTML5, formularios y estructura.</p>
+                        <div class="card-footer"><span class="card-tag">HTML5</span></div>
+                    </a>
+                    <a href="semanas/semana3/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 03</span><span class="card-badge completada">Completa</span></div>
+                        <h3>CSS y Diseño</h3>
+                        <p>Box model, Flexbox, Grid y responsive design.</p>
+                        <div class="card-footer"><span class="card-tag">CSS3</span><span class="card-tag">Grid</span></div>
+                    </a>
+                    <a href="semanas/semana4/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 04</span><span class="card-badge completada">Completa</span></div>
+                        <h3>JavaScript Básico</h3>
+                        <p>Variables, funciones, condicionales y bucles.</p>
+                        <div class="card-footer"><span class="card-tag">JavaScript</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- UNIDAD 2 -->
+            <div class="unit-section unit-2">
+                <div class="unit-header">
+                    <div class="unit-number">2</div>
+                    <div class="unit-info">
+                        <h2>JavaScript Avanzado</h2>
+                        <p>Semanas 5–8 · Eventos, DOM, APIs y proyecto integrador</p>
+                    </div>
+                    <span class="unit-weeks">Sem 5–8</span>
+                </div>
+                <div class="semanas-grid">
+                    <a href="semanas/semana5/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 05</span><span class="card-badge completada">Completa</span></div>
+                        <h3>Eventos en JavaScript</h3>
+                        <p>Eventos del DOM, formularios interactivos y validación.</p>
+                        <div class="card-footer"><span class="card-tag">Eventos</span><span class="card-tag">DOM</span></div>
+                    </a>
+                    <a href="semanas/semana6/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 06</span><span class="card-badge completada">Completa</span></div>
+                        <h3>DOM y Manipulación</h3>
+                        <p>Manipulación dinámica del DOM y CRUD sin librerías.</p>
+                        <div class="card-footer"><span class="card-tag">DOM</span><span class="card-tag">CRUD</span></div>
+                    </a>
+                    <a href="semanas/semana7/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 07</span><span class="card-badge completada">Completa</span></div>
+                        <h3>Proyecto Integrador</h3>
+                        <p>Proyecto real con HTML, CSS y JS publicado en GitHub Pages.</p>
+                        <div class="card-footer"><span class="card-tag">Deploy</span><span class="card-tag">GitHub Pages</span></div>
+                    </a>
+                    <a href="semanas/semana8/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 08</span><span class="card-badge completada">Completa</span></div>
+                        <h3>APIs y Fetch</h3>
+                        <p>Consumo de APIs REST con async/await y JSON.</p>
+                        <div class="card-footer"><span class="card-tag">API</span><span class="card-tag">Fetch</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- UNIDAD 3 -->
+            <div class="unit-section unit-3">
+                <div class="unit-header">
+                    <div class="unit-number">3</div>
+                    <div class="unit-info">
+                        <h2>React & Ecosistema</h2>
+                        <p>Semanas 9–12 · React, Hooks, SPA y proyecto React</p>
+                    </div>
+                    <span class="unit-weeks">Sem 9–12</span>
+                </div>
+                <div class="semanas-grid">
+                    <a href="semanas/semana9/index.html" class="semana-card completada">
+                        <div class="card-header"><span class="card-week">Semana 09</span><span class="card-badge completada">Completa</span></div>
+                        <h3>Introducción a React</h3>
+                        <p>JSX, componentes funcionales, props y Virtual DOM.</p>
+                        <div class="card-footer"><span class="card-tag">React</span><span class="card-tag">JSX</span></div>
+                    </a>
+                    <a href="semanas/semana10/index.html" class="semana-card en-curso">
+                        <div class="card-header"><span class="card-week">Semana 10</span><span class="card-badge en-curso">En curso</span></div>
+                        <h3>React: Estado</h3>
+                        <p>useState, flujo unidireccional y comunicación entre componentes.</p>
+                        <div class="card-footer"><span class="card-tag">useState</span><span class="card-tag">Hooks</span></div>
+                    </a>
+                    <a href="semanas/semana11/index.html" class="semana-card pendiente">
+                        <div class="card-header"><span class="card-week">Semana 11</span><span class="card-badge pendiente">Pendiente</span></div>
+                        <h3>React Hooks</h3>
+                        <p>useEffect, useContext y custom hooks.</p>
+                        <div class="card-footer"><span class="card-tag">useEffect</span><span class="card-tag">useContext</span></div>
+                    </a>
+                    <a href="semanas/semana12/index.html" class="semana-card pendiente">
+                        <div class="card-header"><span class="card-week">Semana 12</span><span class="card-badge pendiente">Pendiente</span></div>
+                        <h3>Proyecto React</h3>
+                        <p>SPA completa con React Router y API externa.</p>
+                        <div class="card-footer"><span class="card-tag">SPA</span><span class="card-tag">React Router</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- UNIDAD 4 -->
+            <div class="unit-section unit-4">
+                <div class="unit-header">
+                    <div class="unit-number">4</div>
+                    <div class="unit-info">
+                        <h2>Backend & Deploy</h2>
+                        <p>Semanas 13–16 · SQL, Node.js, Deploy y Proyecto Final</p>
+                    </div>
+                    <span class="unit-weeks">Sem 13–16</span>
+                </div>
+                <div class="semanas-grid">
+                    <a href="semanas/semana13/index.html" class="semana-card pendiente">
+                        <div class="card-header"><span class="card-week">Semana 13</span><span class="card-badge pendiente">Pendiente</span></div>
+                        <h3>Base de Datos</h3>
+                        <p>SQL, diseño relacional y conexión con Node.js.</p>
+                        <div class="card-footer"><span class="card-tag">SQL</span><span class="card-tag">PostgreSQL</span></div>
+                    </a>
+                    <a href="semanas/semana14/index.html" class="semana-card pendiente">
+                        <div class="card-header"><span class="card-week">Semana 14</span><span class="card-badge pendiente">Pendiente</span></div>
+                        <h3>Backend con Node.js</h3>
+                        <p>Express, rutas REST, JWT y full-stack.</p>
+                        <div class="card-footer"><span class="card-tag">Node.js</span><span class="card-tag">Express</span></div>
+                    </a>
+                    <a href="semanas/semana15/index.html" class="semana-card pendiente">
+                        <div class="card-header"><span class="card-week">Semana 15</span><span class="card-badge pendiente">Pendiente</span></div>
+                        <h3>Deploy y DevOps</h3>
+                        <p>Vercel, Railway, variables de entorno y CI/CD.</p>
+                        <div class="card-footer"><span class="card-tag">Deploy</span><span class="card-tag">CI/CD</span></div>
+                    </a>
+                    <a href="semanas/semana16/index.html" class="semana-card pendiente">
+                        <div class="card-header"><span class="card-week">Semana 16</span><span class="card-badge pendiente">Pendiente</span></div>
+                        <h3>Proyecto Final</h3>
+                        <p>App completa, documentación y presentación.</p>
+                        <div class="card-footer"><span class="card-tag">Full-Stack</span><span class="card-tag">Final</span></div>
+                    </a>
+                </div>
+            </div>
+
+            <p style="text-align:center; margin-top:1rem;">
+                <a href="index.html" class="btn">← Volver al Inicio</a>
             </p>
         </div>
     </main>
@@ -133,4 +206,3 @@
     </footer>
 </body>
 </html>
-
