@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio — Base de Datos</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --accent: #00e5ff;
+    --accent2: #ff6b35;
+    --accent3: #a855f7;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+    --u1: #00e5ff;
+    --u2: #ff6b35;
+    --u3: #a855f7;
+    --u4: #22d3a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* Header */
+  header {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-area h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .logo-area h1 span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .logo-area p {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .github-main {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .github-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    opacity: 0.1;
+  }
+
+  .github-main:hover::before { transform: translateX(0); }
+  .github-main:hover { border-color: var(--accent); color: var(--accent); }
+
+  .github-main svg { width: 18px; height: 18px; }
+
+  /* Stats bar */
+  .stats {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Units */
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .units-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+
+  .unit-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .unit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--unit-color);
+  }
+
+  .unit-card:hover { border-color: var(--unit-color); }
+
+  .unit-card[data-unit="1"] { --unit-color: var(--u1); }
+  .unit-card[data-unit="2"] { --unit-color: var(--u2); }
+  .unit-card[data-unit="3"] { --unit-color: var(--u3); }
+  .unit-card[data-unit="4"] { --unit-color: var(--u4); }
+
+  .unit-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .unit-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--unit-color);
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--unit-color);
+    padding: 0.3rem 0.6rem;
+    opacity: 0.9;
+  }
+
+  .unit-num {
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--border);
+    line-height: 1;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .unit-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .unit-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* Weeks grid inside unit */
+  .weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+
+  .week-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.6rem 0.4rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .week-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--unit-color);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .week-btn:hover::after { opacity: 0.1; }
+  .week-btn:hover { border-color: var(--unit-color); }
+
+  .week-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--unit-color);
+    position: relative;
+    z-index: 1;
+  }
+
+  .week-label {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .unit-card {
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .unit-card:nth-child(1) { animation-delay: 0.1s; }
+  .unit-card:nth-child(2) { animation-delay: 0.2s; }
+  .unit-card:nth-child(3) { animation-delay: 0.3s; }
+  .unit-card:nth-child(4) { animation-delay: 0.4s; }
+
+  @media (max-width: 600px) {
+    .units-grid { grid-template-columns: 1fr; }
+    .weeks-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="container">
+  <header>
+    <div class="header-inner">
+      <div class="logo-area">
+        <h1>PORTAFOLIO<span>BASE DE DATOS</span></h1>
+        <p>// JOSUE &nbsp;·&nbsp; 16 SEMANAS &nbsp;·&nbsp; 4 UNIDADES</p>
+      </div>
+      <a href="https://github.com/josue12335/Proyecto_final" target="_blank" class="github-main">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        VER EN GITHUB
+      </a>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">04</div>
+      <div class="stat-label">Unidades</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">16</div>
+      <div class="stat-label">Semanas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">DB</div>
+      <div class="stat-label">Materia</div>
+    </div>
+  </div>
+
+  <p class="section-title">Unidades del curso</p>
+
+  <div class="units-grid">
+
+    <!-- UNIDAD 1 -->
+    <div class="unit-card" data-unit="1">
+      <div class="unit-header">
+        <div>
+          <div class="unit-badge">Unidad 01</div>
+          <div class="unit-title" style="margin-top:0.75rem">Fundamentos de BD</div>
+          <div class="unit-subtitle">Introducción, modelos y conceptos básicos de bases de datos relacionales.</div>
+        </div>
+        <div class="unit-num">01</div>
+      </div>
+      <div class="weeks-grid">
+        <a href="semanas/semana-01/index.html" class="week-btn">
+          <span class="week-num">S01</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-02/index.html" class="week-btn">
+          <span class="week-num">S02</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-03/index.html" class="week-btn">
+          <span class="week-num">S03</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-04/index.html" class="week-btn">
+          <span class="week-num">S04</span><span class="week-label">Semana</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- UNIDAD 2 -->
+    <div class="unit-card" data-unit="2">
+      <div class="unit-header">
+        <div>
+          <div class="unit-badge">Unidad 02</div>
+          <div class="unit-title" style="margin-top:0.75rem">Diseño y Modelado</div>
+          <div class="unit-subtitle">Modelo entidad-relación, normalización y diseño lógico de bases de datos.</div>
+        </div>
+        <div class="unit-num">02</div>
+      </div>
+      <div class="weeks-grid">
+        <a href="semanas/semana-05/index.html" class="week-btn">
+          <span class="week-num">S05</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-06/index.html" class="week-btn">
+          <span class="week-num">S06</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-07/index.html" class="week-btn">
+          <span class="week-num">S07</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-08/index.html" class="week-btn">
+          <span class="week-num">S08</span><span class="week-label">Semana</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- UNIDAD 3 -->
+    <div class="unit-card" data-unit="3">
+      <div class="unit-header">
+        <div>
+          <div class="unit-badge">Unidad 03</div>
+          <div class="unit-title" style="margin-top:0.75rem">SQL y Consultas</div>
+          <div class="unit-subtitle">Lenguaje SQL, DDL, DML, consultas avanzadas y procedimientos almacenados.</div>
+        </div>
+        <div class="unit-num">03</div>
+      </div>
+      <div class="weeks-grid">
+        <a href="semanas/semana-09/index.html" class="week-btn">
+          <span class="week-num">S09</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-10/index.html" class="week-btn">
+          <span class="week-num">S10</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-11/index.html" class="week-btn">
+          <span class="week-num">S11</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-12/index.html" class="week-btn">
+          <span class="week-num">S12</span><span class="week-label">Semana</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- UNIDAD 4 -->
+    <div class="unit-card" data-unit="4">
+      <div class="unit-header">
+        <div>
+          <div class="unit-badge">Unidad 04</div>
+          <div class="unit-title" style="margin-top:0.75rem">Administración Avanzada</div>
+          <div class="unit-subtitle">Seguridad, transacciones, optimización y administración de sistemas de BD.</div>
+        </div>
+        <div class="unit-num">04</div>
+      </div>
+      <div class="weeks-grid">
+        <a href="semanas/semana-13/index.html" class="week-btn">
+          <span class="week-num">S13</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-14/index.html" class="week-btn">
+          <span class="week-num">S14</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-15/index.html" class="week-btn">
+          <span class="week-num">S15</span><span class="week-label">Semana</span>
+        </a>
+        <a href="semanas/semana-16/index.html" class="week-btn">
+          <span class="week-num">S16</span><span class="week-label">Semana</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Portafolio de Base de Datos &mdash; <a href="https://github.com/josue12335/Proyecto_final" target="_blank">github.com/josue12335/Proyecto_final</a></p>
+    <p>16 semanas &nbsp;·&nbsp; 4 unidades</p>
+  </footer>
+</div>
+
+</body>
+</html>
