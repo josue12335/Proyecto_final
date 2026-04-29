@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 4 - Proyecto 16 Semanas</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="../assets/logo.png" alt="Logo">
+                <span class="logo-text">Mi Proyecto</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="../semanas.html">Semanas</a></li>
+                    <li><a href="../about.html">Acerca de mÃ­</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Semana 4: JavaScript Básico</h1>
+            
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="openTab(event, 'unidad1')">Unidad 1: Objetivos y Aprendizajes</button>
+                    <button class="tab-button" onclick="openTab(event, 'unidad2')">Unidad 2: Proyectos Realizados</button>
+                    <button class="tab-button" onclick="openTab(event, 'unidad3')">Unidad 3: Desafíos y Reflexión</button>
+                    <button class="tab-button" onclick="openTab(event, 'unidad4')">Unidad 4: Recursos y Evidencias</button>
+                </div>
+                
+                <div id="unidad1" class="tab-content active unidad-1">
+                    <h2>Objetivos de la Semana</h2>
+                    <ul>
+                        <li>Aprender fundamentales de JavaScript</li>
+                        <li>Variables, tipos de datos y operadores</li>
+                        <li>Control de flujo y funciones</li>
+                    </ul>
+
+                    <h2>Lo que Aprendí</h2>
+                    <p>
+                        Esta semana comencé con JavaScript puro. Aprendí sobre variables, tipos de datos, 
+                        operadores lógicos y control de flujo. [Completa con tus aprendizajes específicos]
+                    </p>
+                </div>
+                
+                <div id="unidad2" class="tab-content unidad-2">
+                    <h2>Proyectos Realizados</h2>
+                    <ul>
+                        <li>Proyecto 1: [Descripción]</li>
+                        <li>Proyecto 2: [Descripción]</li>
+                    </ul>
+                </div>
+                
+                <div id="unidad3" class="tab-content unidad-3">
+                    <h2>Desafíos Enfrentados</h2>
+                    <p>
+                        Los principales desafíos fueron... [Describe los desafíos y cómo los superaste]
+                    </p>
+
+                    <h2>Reflexión</h2>
+                    <p>
+                        Mi reflexión personal sobre esta semana... [Escribe tus reflexiones]
+                    </p>
+                </div>
+                
+                <div id="unidad4" class="tab-content unidad-4">
+                    <h2>Recursos Utilizados</h2>
+                    <ul>
+                        <li><a href="#">Recurso 1</a></li>
+                        <li><a href="#">Recurso 2</a></li>
+                    </ul>
+
+                    <div class="upload-card">
+                        <h3>Subir archivos de la semana</h3>
+                        <p>Selecciona los archivos que quieras guardar como evidencia o complemento de esta semana.</p>
+                        <label for="file-upload">Seleccionar archivos</label>
+                        <input id="file-upload" class="file-upload-input" type="file" data-list="upload-list" multiple>
+                        <ul id="upload-list" class="upload-list">
+                            <li>Ningún archivo seleccionado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                <div class="week-actions">
+                    <a href="https://github.com/josue12335/proyecto-16-semanas/tree/main/semanas/semana4" target="_blank" class="btn github-btn">Ver GitHub Semana 4</a>
+                </div>
+
+                <div class="pdf-viewer-card">
+                    <h3>Visor PDF desde GitHub</h3>
+                    <p>Pega aquí un enlace RAW o un enlace GitHub con /blob/ a un PDF.</p>
+                    <form id="pdfForm" class="pdf-form">
+                        <label for="pdfUrl">URL del PDF</label>
+                        <input id="pdfUrl" class="pdf-input" type="url" placeholder="https://raw.githubusercontent.com/usuario/repositorio/main/semanas/semana4/documento.pdf" required>
+                        <button type="submit" class="btn">Ver PDF</button>
+                    </form>
+                    <div class="pdf-preview">
+                        <iframe id="pdfViewer" src="" title="Visor de PDF"></iframe>
+                        <p class="pdf-info">Usa un enlace RAW de GitHub o un enlace .pdf válido.</p>
+                    </div>
+                </div>
+
+            <p style="margin-top: 3rem; text-align: center;">
+                <a href="../semana3/index.html" class="btn" style="margin-right: 1rem;">← Anterior</a>
+                <a href="../semanas.html" class="btn btn-secondary">Volver a Semanas</a>
+                <a href="../semana5/index.html" class="btn btn-secondary" style="margin-left: 1rem;">Siguiente →</a>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Proyecto de 16 Semanas. Todos los derechos reservados.</p>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    
+        const pdfForm = document.getElementById('pdfForm');
+        if (pdfForm) {
+            const pdfUrlInput = document.getElementById('pdfUrl');
+            const pdfViewer = document.getElementById('pdfViewer');
+            const pdfInfo = document.querySelector('.pdf-info');
+
+            pdfForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                let pdfUrl = pdfUrlInput.value.trim();
+                if (!pdfUrl) {
+                    pdfInfo.textContent = 'Ingresa una URL válida a un archivo PDF.';
+                    return;
+                }
+                if (pdfUrl.includes('github.com') && !pdfUrl.includes('raw.githubusercontent.com')) {
+                    pdfUrl = pdfUrl.replace('https://github.com/', 'https://raw.githubusercontent.com/').replace('/blob/', '/');
+                }
+                pdfViewer.src = pdfUrl;
+                pdfInfo.textContent = 'Si el PDF no carga, verifica que el enlace sea un archivo .pdf o un enlace RAW de GitHub.';
+            });
+        }
+</script>
+    <script src="../js/upload.js"></script>`n</body>
+</html>
+
+
+
+
