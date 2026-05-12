@@ -3,569 +3,1130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portafolio — Base de Datos</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<title>Portafolio — Base de Datos II</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --card: #16161f;
-    --border: #2a2a3a;
-    --accent: #00e5ff;
-    --accent2: #ff6b35;
-    --accent3: #a855f7;
-    --text: #e8e8f0;
-    --muted: #6b6b8a;
-    --u1: #00e5ff;
-    --u2: #ff6b35;
-    --u3: #a855f7;
-    --u4: #22d3a0;
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --unit-colors: #00d4ff, #7c3aed, #10b981, #f59e0b;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
+    font-family: 'Syne', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-family: 'Syne', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* Background grid */
+  /* BG grid */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+      linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
     pointer-events: none;
     z-index: 0;
   }
 
-  .noise {
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  .container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-  /* Header */
+  /* ─── HEADER ─── */
   header {
-    padding: 3rem 0 2rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4rem;
-  }
-
-  /* UPLA Logo bar — encima del header principal */
-  .upla-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .upla-logo-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    text-decoration: none;
-  }
-
-  .upla-logo-img {
-    height: 52px;
-    width: auto;
-    /* filtro para que se vea bien sobre fondo oscuro */
-    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(0,229,255,0.25));
-    transition: filter 0.3s;
-  }
-
-  .upla-logo-wrap:hover .upla-logo-img {
-    filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(0,229,255,0.55));
-  }
-
-  .upla-text-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-
-  .upla-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 0.9rem;
-    letter-spacing: 0.04em;
-    color: var(--text);
-    line-height: 1.2;
-  }
-
-  .upla-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .logo-area h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
-  .logo-area h1 span {
-    color: var(--accent);
-    display: block;
-  }
-
-  .logo-area p {
-    margin-top: 0.75rem;
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-  }
-
-  .github-main {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--text);
-    text-decoration: none;
-    padding: 0.75rem 1.25rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    transition: all 0.2s;
     position: relative;
-    overflow: hidden;
-  }
-
-  .github-main::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--accent);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    opacity: 0.1;
-  }
-
-  .github-main:hover::before { transform: translateX(0); }
-  .github-main:hover { border-color: var(--accent); color: var(--accent); }
-
-  .github-main svg { width: 18px; height: 18px; }
-
-  /* Stats bar */
-  .stats {
+    z-index: 10;
     display: flex;
-    gap: 2rem;
-    padding: 1.5rem 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 4rem;
-    flex-wrap: wrap;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
   }
 
-  .stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
 
-  .stat-num {
-    font-size: 2rem;
-    font-weight: 800;
+  /* UPLA Logo */
+  .logo-upla {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 16px rgba(0,212,255,0.35);
+    flex-shrink: 0;
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-upla img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .logo-upla-fallback {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #003087, #0066cc);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: white; font-size: 9px; font-weight: 700;
+    text-align: center; line-height: 1.2; padding: 6px;
     font-family: 'Space Mono', monospace;
-    color: var(--accent);
-    line-height: 1;
   }
 
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--muted);
+  .header-titles h1 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .header-titles h1 span { color: var(--accent); }
+  .header-titles p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    margin-top: 2px;
   }
 
-  /* Units */
-  .section-title {
+  .header-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .badge-repo {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .badge-repo:hover { border-color: var(--accent); color: var(--accent); }
+  .badge-repo svg { width: 16px; height: 16px; }
+
+  .btn-refresh {
+    display: flex; align-items: center; gap: 6px;
+    padding: 9px 16px;
+    background: linear-gradient(135deg, var(--accent), #0099cc);
+    border: none; border-radius: 8px;
+    color: #000; font-weight: 700; font-size: 0.8rem;
+    cursor: pointer; transition: all .2s;
+    font-family: 'Syne', sans-serif;
+  }
+  .btn-refresh:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,212,255,0.4); }
+  .btn-refresh svg { width: 14px; height: 14px; }
+  .btn-refresh.loading svg { animation: spin 1s linear infinite; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 50px 40px 30px;
+  }
+  .hero-label {
+    display: inline-block;
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    color: var(--accent);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.25);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 16px;
   }
-
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .units-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
-    gap: 2rem;
-    margin-bottom: 5rem;
-  }
-
-  .unit-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s;
-  }
-
-  .unit-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--unit-color);
-  }
-
-  .unit-card:hover { border-color: var(--unit-color); }
-
-  .unit-card[data-unit="1"] { --unit-color: var(--u1); }
-  .unit-card[data-unit="2"] { --unit-color: var(--u2); }
-  .unit-card[data-unit="3"] { --unit-color: var(--u3); }
-  .unit-card[data-unit="4"] { --unit-color: var(--u4); }
-
-  .unit-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-
-  .unit-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--unit-color);
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--unit-color);
-    padding: 0.3rem 0.6rem;
-    opacity: 0.9;
-  }
-
-  .unit-num {
-    font-size: 5rem;
+  .hero h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800;
-    color: var(--border);
-    line-height: 1;
-    font-family: 'Space Mono', monospace;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 10px;
+  }
+  .hero h2 .hl { 
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 560px;
+    margin: 0 auto;
   }
 
-  .unit-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text);
-  }
-
-  .unit-subtitle {
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-
-  /* Weeks grid inside unit */
-  .weeks-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-  }
-
-  .week-btn {
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    display: flex; justify-content: center; gap: 0;
+    margin: 28px 40px;
     background: var(--surface);
     border: 1px solid var(--border);
-    color: var(--text);
-    padding: 0.6rem 0.4rem;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    transition: all 0.2s;
-    position: relative;
+    border-radius: 14px;
     overflow: hidden;
+    position: relative; z-index: 1;
+  }
+  .stat {
+    flex: 1; text-align: center;
+    padding: 18px 12px;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-size: 1.8rem; font-weight: 800;
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--text-muted);
+    margin-top: 4px;
+    font-family: 'Space Mono', monospace;
+  }
+  .stat:nth-child(1) .stat-num { color: var(--accent); }
+  .stat:nth-child(2) .stat-num { color: var(--accent2); }
+  .stat:nth-child(3) .stat-num { color: var(--accent3); }
+  .stat:nth-child(4) .stat-num { color: var(--warning); }
+
+  /* ─── MAIN GRID ─── */
+  .main { 
+    position: relative; z-index: 1;
+    padding: 0 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
-  .week-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--unit-color);
-    opacity: 0;
-    transition: opacity 0.2s;
+  /* ─── UNIT ─── */
+  .unit {
+    margin-bottom: 48px;
+  }
+  .unit-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .unit-dot {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1rem;
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+  }
+  .unit:nth-child(1) .unit-dot { background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+  .unit:nth-child(2) .unit-dot { background: rgba(124,58,237,0.15); color: #7c3aed; border: 1px solid rgba(124,58,237,0.3); }
+  .unit:nth-child(3) .unit-dot { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+  .unit:nth-child(4) .unit-dot { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+
+  .unit-info h3 {
+    font-size: 1.1rem; font-weight: 700;
+  }
+  .unit-info p {
+    font-size: 0.75rem; color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
   }
 
-  .week-btn:hover::after { opacity: 0.1; }
-  .week-btn:hover { border-color: var(--unit-color); }
+  /* ─── WEEKS GRID ─── */
+  .weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
 
+  /* ─── WEEK CARD ─── */
+  .week-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .week-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,212,255,0.2);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  .week-card-head {
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
   .week-num {
     font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--unit-color);
-    position: relative;
-    z-index: 1;
-  }
-
-  .week-label {
-    font-size: 0.6rem;
-    color: var(--muted);
+    font-size: 0.7rem;
+    color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    position: relative;
-    z-index: 1;
+    letter-spacing: 1px;
+  }
+  .week-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+  .chevron {
+    width: 20px; height: 20px;
+    color: var(--text-muted);
+    transition: transform .3s;
+    flex-shrink: 0;
+  }
+  .week-card.open .chevron { transform: rotate(180deg); }
+
+  /* Unit color accents on left border */
+  .unit:nth-child(1) .week-card { border-left: 3px solid #00d4ff; }
+  .unit:nth-child(2) .week-card { border-left: 3px solid #7c3aed; }
+  .unit:nth-child(3) .week-card { border-left: 3px solid #10b981; }
+  .unit:nth-child(4) .week-card { border-left: 3px solid #f59e0b; }
+
+  /* ─── WEEK BODY ─── */
+  .week-body {
+    display: none;
+    padding: 14px 16px;
+  }
+  .week-card.open .week-body { display: block; }
+
+  /* Actions row */
+  .actions-row {
+    display: flex; gap: 8px;
+    margin-bottom: 12px;
   }
 
-  /* Footer */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 0;
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+  .btn {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border-radius: 7px;
+    font-size: 0.75rem; font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    border: none;
+    font-family: 'Syne', sans-serif;
   }
+  .btn svg { width: 13px; height: 13px; }
 
-  footer p {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
+  .btn-upload {
+    background: rgba(16,185,129,0.12);
+    color: var(--accent3);
+    border: 1px solid rgba(16,185,129,0.25);
   }
+  .btn-upload:hover { background: rgba(16,185,129,0.22); }
 
-  footer a {
+  .btn-github {
+    background: rgba(0,212,255,0.1);
     color: var(--accent);
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+  .btn-github:hover { background: rgba(0,212,255,0.2); }
+
+  /* Files list */
+  .files-list { display: flex; flex-direction: column; gap: 6px; }
+  .files-list-empty {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-family: 'Space Mono', monospace;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+  }
+
+  .file-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: background .15s;
+  }
+  .file-item:hover { background: rgba(255,255,255,0.04); }
+
+  .file-icon {
+    width: 28px; height: 28px;
+    background: rgba(239,68,68,0.15);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.58rem; font-weight: 700;
+    color: #ef4444;
+    font-family: 'Space Mono', monospace;
+  }
+  .file-icon.html { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.25); color: #f59e0b; }
+  .file-icon.img  { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.25); color: #10b981; }
+  .file-icon.doc  { background: rgba(0,212,255,0.15); border-color: rgba(0,212,255,0.25); color: #00d4ff; }
+  .file-icon.zip  { background: rgba(124,58,237,0.15); border-color: rgba(124,58,237,0.25); color: #7c3aed; }
+
+  .file-name {
+    flex: 1; font-size: 0.78rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-family: 'Space Mono', monospace;
+    color: var(--text);
+  }
+
+  .file-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+  .btn-view-file {
+    padding: 4px 8px;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 5px;
+    color: var(--accent);
+    font-size: 0.68rem; font-weight: 700;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: 'Syne', sans-serif;
     text-decoration: none;
+    display: flex; align-items: center;
+  }
+  .btn-view-file:hover { background: rgba(0,212,255,0.18); }
+
+  .btn-del-file {
+    padding: 4px 7px;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.15);
+    border-radius: 5px;
+    color: var(--danger);
+    font-size: 0.68rem; font-weight: 700;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: 'Syne', sans-serif;
+  }
+  .btn-del-file:hover { background: rgba(239,68,68,0.18); }
+
+  /* Loading state */
+  .loading-files {
+    text-align: center; padding: 16px;
+    color: var(--text-muted); font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
   }
 
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* ─── PDF MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 90vw; max-width: 900px;
+    height: 88vh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+  }
+  .modal-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-title {
+    font-weight: 700; font-size: 0.9rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 70%;
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+  }
+  .modal-close {
+    width: 32px; height: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+    font-size: 1.1rem;
+  }
+  .modal-close:hover { color: var(--text); border-color: var(--accent); }
+  .modal-body { flex: 1; overflow: hidden; }
+  .modal-body iframe {
+    width: 100%; height: 100%;
+    border: none;
+  }
+  .modal-no-preview {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; gap: 12px;
+    color: var(--text-muted); font-size: 0.85rem;
+    font-family: 'Space Mono', monospace;
+  }
+  .modal-no-preview a {
+    color: var(--accent); text-decoration: underline;
   }
 
-  .unit-card {
-    animation: fadeUp 0.5s ease both;
+  /* ─── TOAST ─── */
+  .toast-container {
+    position: fixed; bottom: 24px; right: 24px; z-index: 99999;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .toast {
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    max-width: 320px;
+    display: flex; align-items: center; gap: 10px;
+    animation: toastIn .3s ease;
+    border: 1px solid;
+  }
+  .toast.success { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.35); color: #10b981; }
+  .toast.error   { background: rgba(239,68,68,0.15);  border-color: rgba(239,68,68,0.35);  color: #ef4444; }
+  .toast.info    { background: rgba(0,212,255,0.12);  border-color: rgba(0,212,255,0.25);  color: #00d4ff; }
+  @keyframes toastIn { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  /* ─── UPLOAD MODAL ─── */
+  .upload-modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 9998;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .upload-modal-overlay.active { display: flex; }
+  .upload-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    width: 90vw; max-width: 480px;
+  }
+  .upload-modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .upload-modal p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; }
+  .upload-drop {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    margin-bottom: 14px;
+  }
+  .upload-drop:hover, .upload-drop.dragover {
+    border-color: var(--accent3);
+    background: rgba(16,185,129,0.05);
+  }
+  .upload-drop p { color: var(--text-muted); font-size: 0.82rem; margin: 0; }
+  .upload-drop span { color: var(--accent3); font-weight: 700; }
+  #upload-file-input { display: none; }
+  .upload-actions { display: flex; gap: 10px; }
+  .btn-cancel-upload {
+    flex: 1; padding: 10px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text-muted);
+    cursor: pointer; font-weight: 700; font-size: 0.82rem;
+    transition: all .2s; font-family: 'Syne', sans-serif;
+  }
+  .btn-cancel-upload:hover { color: var(--text); border-color: var(--text-muted); }
+  .btn-confirm-upload {
+    flex: 2; padding: 10px;
+    background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 8px; color: var(--accent3);
+    cursor: pointer; font-weight: 700; font-size: 0.82rem;
+    transition: all .2s; font-family: 'Syne', sans-serif;
+  }
+  .btn-confirm-upload:hover { background: rgba(16,185,129,0.25); }
+  .selected-file-name {
+    font-size: 0.75rem; color: var(--accent3);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 12px; display: none;
   }
 
-  .unit-card:nth-child(1) { animation-delay: 0.1s; }
-  .unit-card:nth-child(2) { animation-delay: 0.2s; }
-  .unit-card:nth-child(3) { animation-delay: 0.3s; }
-  .unit-card:nth-child(4) { animation-delay: 0.4s; }
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
+  }
+  footer span { color: var(--accent); }
 
-  @media (max-width: 600px) {
-    .units-grid { grid-template-columns: 1fr; }
-    .weeks-grid { grid-template-columns: repeat(4, 1fr); }
-    .upla-logo-img { height: 40px; }
-    .upla-name { font-size: 0.78rem; }
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    header { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
+    .main { padding: 0 16px 40px; }
+    .hero { padding: 30px 20px 20px; }
+    .stats-bar { margin: 16px 16px; flex-wrap: wrap; }
+    .stat { min-width: 100px; }
+    .weeks-grid { grid-template-columns: 1fr; }
+    .header-right { flex-wrap: wrap; }
   }
 </style>
 </head>
 <body>
-<div class="noise"></div>
 
-<div class="container">
-  <header>
-
-    <!-- ── LOGO UPLA ── -->
-    <div class="upla-bar">
-      <a href="https://upla.edu.pe" target="_blank" class="upla-logo-wrap" title="Universidad Peruana Los Andes">
-        <img
-          src="Upla.png" alt="Logo UPLA" 
-        />
-        <!-- Fallback SVG si la imagen no carga -->
-        <svg style="display:none; width:44px; height:44px;" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="22,4 40,36 4,36" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
-          <text x="22" y="30" text-anchor="middle" font-family="monospace" font-size="9" font-weight="bold" fill="#00e5ff">UPLA</text>
-        </svg>
-        <div class="upla-text-block">
-          <span class="upla-name">Universidad Peruana<br>Los Andes</span>
-          <span class="upla-sub">UPLA · Huancayo, Perú</span>
-        </div>
-      </a>
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="logo-upla">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/UPLA_logo.png/240px-UPLA_logo.png" 
+           alt="UPLA" 
+           onerror="this.parentElement.innerHTML='<div class=\'logo-upla-fallback\'>UPLA<br>PERÚ</div>'">
     </div>
-    <!-- ── FIN LOGO UPLA ── -->
-
-    <div class="header-inner">
-      <div class="logo-area">
-        <h1>PORTAFOLIO<span>BASE DE DATOS</span></h1>
-        <p>// JOSUE &nbsp;·&nbsp; 16 SEMANAS &nbsp;·&nbsp; 4 UNIDADES</p>
-      </div>
-      <a href="https://github.com/josue12335/Proyecto_final" target="_blank" class="github-main">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        VER EN GITHUB
-      </a>
-    </div>
-  </header>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">04</div>
-      <div class="stat-label">Unidades</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">16</div>
-      <div class="stat-label">Semanas</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">DB</div>
-      <div class="stat-label">Materia</div>
+    <div class="header-titles">
+      <h1>PORT<span>AFOLIO</span></h1>
+      <p>Ing. de Sistemas · Base de Datos II</p>
     </div>
   </div>
-
-  <p class="section-title">Unidades del curso</p>
-
-  <div class="units-grid">
-
-    <!-- UNIDAD 1 -->
-    <div class="unit-card" data-unit="1">
-      <div class="unit-header">
-        <div>
-          <div class="unit-badge">Unidad 01</div>
-          <div class="unit-title" style="margin-top:0.75rem">Fundamentos de BD</div>
-          <div class="unit-subtitle">Introducción, modelos y conceptos básicos de bases de datos relacionales.</div>
-        </div>
-        <div class="unit-num">01</div>
-      </div>
-      <div class="weeks-grid">
-        <a href="semanas/semana-01/index.html" class="week-btn">
-          <span class="week-num">S01</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-02/index.html" class="week-btn">
-          <span class="week-num">S02</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-03/index.html" class="week-btn">
-          <span class="week-num">S03</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-04/index.html" class="week-btn">
-          <span class="week-num">S04</span><span class="week-label">Semana</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- UNIDAD 2 -->
-    <div class="unit-card" data-unit="2">
-      <div class="unit-header">
-        <div>
-          <div class="unit-badge">Unidad 02</div>
-          <div class="unit-title" style="margin-top:0.75rem">Diseño y Modelado</div>
-          <div class="unit-subtitle">Modelo entidad-relación, normalización y diseño lógico de bases de datos.</div>
-        </div>
-        <div class="unit-num">02</div>
-      </div>
-      <div class="weeks-grid">
-        <a href="semanas/semana-05/index.html" class="week-btn">
-          <span class="week-num">S05</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-06/index.html" class="week-btn">
-          <span class="week-num">S06</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-07/index.html" class="week-btn">
-          <span class="week-num">S07</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-08/index.html" class="week-btn">
-          <span class="week-num">S08</span><span class="week-label">Semana</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- UNIDAD 3 -->
-    <div class="unit-card" data-unit="3">
-      <div class="unit-header">
-        <div>
-          <div class="unit-badge">Unidad 03</div>
-          <div class="unit-title" style="margin-top:0.75rem">SQL y Consultas</div>
-          <div class="unit-subtitle">Lenguaje SQL, DDL, DML, consultas avanzadas y procedimientos almacenados.</div>
-        </div>
-        <div class="unit-num">03</div>
-      </div>
-      <div class="weeks-grid">
-        <a href="semanas/semana-09/index.html" class="week-btn">
-          <span class="week-num">S09</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-10/index.html" class="week-btn">
-          <span class="week-num">S10</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-11/index.html" class="week-btn">
-          <span class="week-num">S11</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-12/index.html" class="week-btn">
-          <span class="week-num">S12</span><span class="week-label">Semana</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- UNIDAD 4 -->
-    <div class="unit-card" data-unit="4">
-      <div class="unit-header">
-        <div>
-          <div class="unit-badge">Unidad 04</div>
-          <div class="unit-title" style="margin-top:0.75rem">Administración Avanzada</div>
-          <div class="unit-subtitle">Seguridad, transacciones, optimización y administración de sistemas de BD.</div>
-        </div>
-        <div class="unit-num">04</div>
-      </div>
-      <div class="weeks-grid">
-        <a href="semanas/semana-13/index.html" class="week-btn">
-          <span class="week-num">S13</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-14/index.html" class="week-btn">
-          <span class="week-num">S14</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-15/index.html" class="week-btn">
-          <span class="week-num">S15</span><span class="week-label">Semana</span>
-        </a>
-        <a href="semanas/semana-16/index.html" class="week-btn">
-          <span class="week-num">S16</span><span class="week-label">Semana</span>
-        </a>
-      </div>
-    </div>
-
+  <div class="header-right">
+    <a class="badge-repo" href="https://github.com/josue12335/Proyecto_final" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+      josue12335/Proyecto_final
+    </a>
+    <button class="btn-refresh" id="btn-refresh-all" onclick="loadAllWeeks()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+      Sincronizar GitHub
+    </button>
   </div>
+</header>
 
-  <footer>
-    <p>Portafolio de Base de Datos &mdash; <a href="https://github.com/josue12335/Proyecto_final" target="_blank">github.com/josue12335/Proyecto_final</a></p>
-    <p>16 semanas &nbsp;·&nbsp; 4 unidades</p>
-  </footer>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Portafolio Académico 2024</div>
+  <h2>Base de Datos <span class="hl">II</span></h2>
+  <p>Repositorio de evidencias por semana — 4 unidades · 16 semanas de contenido académico</p>
 </div>
 
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Unidades</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">16</div>
+    <div class="stat-label">Semanas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-files">—</div>
+    <div class="stat-label">Archivos</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-weeks-with">—</div>
+    <div class="stat-label">Con archivos</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main" id="main-content">
+  <!-- Generated by JS -->
+</main>
+
+<!-- PDF / FILE VIEWER MODAL -->
+<div class="modal-overlay" id="pdf-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title" id="modal-title">Archivo</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="upload-modal-overlay" id="upload-modal">
+  <div class="upload-modal">
+    <h3>Subir archivo</h3>
+    <p id="upload-modal-subtitle">Semana — / —</p>
+    <div class="upload-drop" id="upload-drop" onclick="document.getElementById('upload-file-input').click()">
+      <p>Arrastra un archivo aquí o <span>haz clic para seleccionar</span></p>
+    </div>
+    <div class="selected-file-name" id="selected-file-name"></div>
+    <input type="file" id="upload-file-input" accept=".pdf,.html,.htm,.jpg,.jpeg,.png,.gif,.docx,.xlsx,.zip,.txt">
+    <div class="upload-actions">
+      <button class="btn-cancel-upload" onclick="closeUploadModal()">Cancelar</button>
+      <button class="btn-confirm-upload" onclick="confirmUpload()">⚠️ Abrir en GitHub</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- FOOTER -->
+<footer>
+  <span>PORTAFOLIO</span> · Ingeniería de Sistemas · Base de Datos II · UPLA 2024 · GitHub: josue12335/Proyecto_final
+</footer>
+
+<script>
+// ──────────────────────────────────────────────
+// CONFIG
+// ──────────────────────────────────────────────
+const REPO_OWNER  = 'josue12335';
+const REPO_NAME   = 'Proyecto_final';
+const REPO_BRANCH = 'main';
+const API_BASE    = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+const RAW_BASE    = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}`;
+const GH_BASE     = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
+
+const UNITS = [
+  {
+    num: 1, title: 'Fundamentos y Modelado Relacional',
+    desc: 'Semanas 1–4',
+    weeks: [
+      { n: 1, title: 'Introducción a BD II', path: 'Semana01' },
+      { n: 2, title: 'Modelo Entidad-Relación', path: 'Semana02' },
+      { n: 3, title: 'Normalización', path: 'Semana03' },
+      { n: 4, title: 'SQL Avanzado', path: 'Semana04' },
+    ]
+  },
+  {
+    num: 2, title: 'Consultas Avanzadas y Optimización',
+    desc: 'Semanas 5–8',
+    weeks: [
+      { n: 5, title: 'Subconsultas y Vistas', path: 'Semana05' },
+      { n: 6, title: 'Índices y Rendimiento', path: 'Semana06' },
+      { n: 7, title: 'Procedimientos Almacenados', path: 'Semana07' },
+      { n: 8, title: 'Triggers y Funciones', path: 'Semana08' },
+    ]
+  },
+  {
+    num: 3, title: 'Administración y Seguridad',
+    desc: 'Semanas 9–12',
+    weeks: [
+      { n: 9,  title: 'Transacciones y Concurrencia', path: 'Semana09' },
+      { n: 10, title: 'Respaldo y Recuperación', path: 'Semana10' },
+      { n: 11, title: 'Seguridad en Bases de Datos', path: 'Semana11' },
+      { n: 12, title: 'Usuarios y Privilegios', path: 'Semana12' },
+    ]
+  },
+  {
+    num: 4, title: 'Tecnologías Emergentes y Proyecto',
+    desc: 'Semanas 13–16',
+    weeks: [
+      { n: 13, title: 'Bases de Datos NoSQL', path: 'Semana13' },
+      { n: 14, title: 'Big Data e Integración', path: 'Semana14' },
+      { n: 15, title: 'Proyecto Final – Avance', path: 'Semana15' },
+      { n: 16, title: 'Proyecto Final – Presentación', path: 'Semana16' },
+    ]
+  }
+];
+
+// Cache for loaded files
+const filesCache = {};
+let totalFiles = 0;
+let weeksWithFiles = 0;
+
+// ──────────────────────────────────────────────
+// BUILD HTML
+// ──────────────────────────────────────────────
+function buildUI() {
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
+
+  UNITS.forEach(unit => {
+    const unitEl = document.createElement('div');
+    unitEl.className = 'unit';
+    unitEl.innerHTML = `
+      <div class="unit-header">
+        <div class="unit-dot">U${unit.num}</div>
+        <div class="unit-info">
+          <h3>${unit.title}</h3>
+          <p>${unit.desc}</p>
+        </div>
+      </div>
+      <div class="weeks-grid" id="unit-${unit.num}-weeks"></div>
+    `;
+    main.appendChild(unitEl);
+
+    const grid = document.getElementById(`unit-${unit.num}-weeks`);
+    unit.weeks.forEach(week => {
+      grid.appendChild(buildWeekCard(week, unit.num));
+    });
+  });
+}
+
+function buildWeekCard(week, unitNum) {
+  const card = document.createElement('div');
+  card.className = 'week-card';
+  card.id = `week-card-${week.n}`;
+
+  card.innerHTML = `
+    <div class="week-card-head" onclick="toggleWeek(${week.n})">
+      <div>
+        <div class="week-num">Semana ${week.n.toString().padStart(2,'0')}</div>
+        <div class="week-title">${week.title}</div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </div>
+    <div class="week-body" id="week-body-${week.n}">
+      <div class="actions-row">
+        <button class="btn btn-upload" onclick="openUploadModal(${week.n}, '${week.path}', '${week.title}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Subir archivo
+        </button>
+        <button class="btn btn-github" onclick="openGitHubFolder('${week.path}')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/></svg>
+          Ver en GitHub
+        </button>
+      </div>
+      <div class="files-list" id="files-list-${week.n}">
+        <div class="loading-files"><div class="spinner"></div> Cargando...</div>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+// ──────────────────────────────────────────────
+// TOGGLE WEEK
+// ──────────────────────────────────────────────
+function toggleWeek(n) {
+  const card = document.getElementById(`week-card-${n}`);
+  const isOpen = card.classList.contains('open');
+  card.classList.toggle('open');
+  if (!isOpen) loadWeekFiles(n);
+}
+
+// ──────────────────────────────────────────────
+// LOAD FILES FROM GITHUB
+// ──────────────────────────────────────────────
+async function loadWeekFiles(weekNum) {
+  const week = findWeek(weekNum);
+  if (!week) return;
+  const listEl = document.getElementById(`files-list-${weekNum}`);
+
+  if (filesCache[weekNum] !== undefined) {
+    renderFiles(weekNum, filesCache[weekNum]);
+    return;
+  }
+
+  listEl.innerHTML = '<div class="loading-files"><div class="spinner"></div> Cargando desde GitHub...</div>';
+
+  try {
+    // Try several common folder structures
+    const pathsToTry = [
+      `Proyecto_final/${week.path}`,
+      week.path,
+      `Proyecto_final/Semana_${String(weekNum).padStart(2,'0')}`,
+      `Semana_${String(weekNum).padStart(2,'0')}`,
+      `Proyecto_final/semana${weekNum}`,
+      `semana${weekNum}`,
+    ];
+
+    let files = null;
+    for (const p of pathsToTry) {
+      try {
+        const res = await fetch(`${API_BASE}/contents/${p}?ref=${REPO_BRANCH}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) { files = data; break; }
+        }
+      } catch(e) {}
+    }
+
+    if (files === null) {
+      // Try root listing and look for week-related folders
+      const res = await fetch(`${API_BASE}/contents/Proyecto_final?ref=${REPO_BRANCH}`);
+      if (res.ok) {
+        const root = await res.json();
+        if (Array.isArray(root)) {
+          const match = root.find(f =>
+            f.name.toLowerCase().includes(`semana${weekNum}`) ||
+            f.name.toLowerCase().includes(`semana_${weekNum}`) ||
+            f.name.toLowerCase().includes(`semana ${weekNum}`) ||
+            f.name.toLowerCase() === `semana${String(weekNum).padStart(2,'0')}` ||
+            f.name.toLowerCase() === `s${weekNum}`
+          );
+          if (match && match.type === 'dir') {
+            const r2 = await fetch(`${API_BASE}/contents/${match.path}?ref=${REPO_BRANCH}`);
+            if (r2.ok) files = await r2.json();
+          } else if (match && match.type === 'file') {
+            files = [match];
+          }
+        }
+      }
+    }
+
+    if (!files) files = [];
+    filesCache[weekNum] = files.filter(f => f.type === 'file');
+    renderFiles(weekNum, filesCache[weekNum]);
+    updateStats();
+
+  } catch(e) {
+    listEl.innerHTML = `<div class="files-list-empty">❌ Error al conectar con GitHub<br><small>${e.message}</small></div>`;
+  }
+}
+
+function findWeek(n) {
+  for (const u of UNITS) {
+    const w = u.weeks.find(wk => wk.n === n);
+    if (w) return w;
+  }
+  return null;
+}
+
+// ──────────────────────────────────────────────
+// RENDER FILES
+// ──────────────────────────────────────────────
+function renderFiles(weekNum, files) {
+  const listEl = document.getElementById(`files-list-${weekNum}`);
+  if (!files || files.length === 0) {
+    listEl.innerHTML = '<div class="files-list-empty">📂 Sin archivos aún<br><small>Sube tu primer archivo con el botón de arriba</small></div>';
+    return;
+  }
+  listEl.innerHTML = '';
+  files.forEach(file => {
+    listEl.appendChild(buildFileItem(file, weekNum));
+  });
+}
+
+function getFileType(name) {
+  const ext = name.split('.').pop().toLowerCase();
+  if (ext === 'pdf') return { label: 'PDF', cls: '' };
+  if (['html','htm'].includes(ext)) return { label: 'HTML', cls: 'html' };
+  if (['jpg','jpeg','png','gif','webp'].includes(ext)) return { label: 'IMG', cls: 'img' };
+  if (['doc','docx'].includes(ext)) return { label: 'DOC', cls: 'doc' };
+  if (['xls','xlsx'].includes(ext)) return { label: 'XLS', cls: 'doc' };
+  if (['zip','rar'].includes(ext)) return { label: 'ZIP', cls: 'zip' };
+  return { label: ext.toUpperCase().slice(0,4) || 'FILE', cls: 'doc' };
+}
+
+function buildFileItem(file, weekNum) {
+  const ft = getFileType(file.name);
+  const item = document.createElement('div');
+  item.className = 'file-item';
+  item.id = `file-item-${weekNum}-${btoa(file.name).replace(/=/g,'')}`;
+  item.innerHTML = `
+    <div class="file-icon ${ft.cls}">${ft.label}</div>
+    <div class="file-name" title="${file.name}">${file.name}</div>
+    <div class="file-actions">
+      <button class="btn-view-file" onclick="viewFile('${encodeURIComponent(file.download_url || '')}', '${encodeURIComponent(file.name)}', '${encodeURIComponent(file.html_url || '')}')">Ver</button>
+      <button class="btn-del-file" onclick="deleteFile(${weekNum}, '${encodeURIComponent(file.name)}', '${encodeURIComponent(file.html_url || '')}')">🗑</button>
+    </div>
+  `;
+  return item;
+}
+
+// ──────────────────────────────────────────────
+// VIEW FILE
+// ──────────────────────────────────────────────
+function viewFile(encodedUrl, encodedName, encodedHtmlUrl) {
+  const url      = decodeURIComponent(encodedUrl);
+  const name     = decodeURIComponent(encodedName);
+  const htmlUrl  = decodeURIComponent(encodedHtmlUrl);
+  const ext      = name.split('.').pop().toLowerCase();
+
+  document.getElementById('modal-title').textContent = name;
+  const body = document.getElementById('modal-body');
+
+  if (ext === 'pdf') {
+    // Use Google Docs viewer or direct embed
+    const embedUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
+    body.innerHTML = `<iframe src="${embedUrl}" title="${name}" allowfullscreen></iframe>`;
+  } else if (['jpg','jpeg','png','gif','webp'].includes(ext)) {
+    body.innerHTML = `<div style="height:100%;display:flex;align-items:center;justify-content:center;padding:20px;">
+      <img src="${url}" alt="${name}" style="max-width:100%;max-height:100%;border-radius:8px;object-fit:contain;">
+    </div>`;
+  } else if (['html','htm'].includes(ext)) {
+    body.innerHTML = `<iframe src="${url}" title="${name}" sandbox="allow-scripts allow-same-origin"></iframe>`;
+  } else {
+    body.innerHTML = `<div class="modal-no-preview">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#64748b"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <p>Vista previa no disponible para este tipo de archivo</p>
+      <a href="${htmlUrl}" target="_blank">Abrir en GitHub →</a>
+    </div>`;
+  }
+
+  document.getElementById('pdf-modal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('pdf-modal').classList.remove('active');
+  document.getElementById('modal-body').innerHTML = '';
+}
+
+// ──────────────────────────────────────────────
+// DELETE FILE (redirect to GitHub — no token)
+// ──────────────────────────────────────────────
+function deleteFile(weekNum, encodedName, encodedHtmlUrl) {
+  const name    = decodeURIComponent(encodedName);
+  const htmlUrl = decodeURIComponent(encodedHtmlUrl);
+
+  if (!confirm(`¿Eliminar "${name}"?\n\nSe abrirá GitHub para que puedas eliminar el archivo desde allí (requiere sesión iniciada en GitHub).`)) return;
+
+  // Clear cache so it reloads after
+  delete filesCache[weekNum];
+  window.open(htmlUrl, '_blank');
+  showToast('Abre GitHub, elimina el archivo y vuelve a sincronizar.', 'info');
+}
+
+// ──────────────────────────────────────────────
+// UPLOAD MODAL
+// ──────────────────────────────────────────────
+let uploadTarget = null;
+
+function openUploadModal(weekNum, path, title) {
+  uploadTarget = { weekNum, path };
+  document.getElementById('upload-modal-subtitle').textContent = `Semana ${weekNum} — ${title}`;
+  document.getElementById('selected-file-name').style.display = 'none';
+  document.getElementById('selected-file-name').textContent = '';
+  document.getElementById('upload-file-input').value = '';
+  document.getElementById('upload-modal').classList.add('active');
+}
+
+function closeUploadModal() {
+  document.getElementById('upload-modal').classList.remove('active');
+  uploadTarget = null;
+}
+
+document.getElementById('upload-file-input').addEventListener('change', function() {
+  if (this.files.length > 0) {
+    const el = document.getElementById('selected-file-name');
+    el.textContent = '📎 ' + this.files[0].name;
+    el.style.display = 'block';
+  }
+});
+
+// Drag & drop
+const dropZone = document.getElementById('upload-drop');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) {
+    const dt = new DataTransfer();
+    dt.items.add(f);
+    document.getElementById('upload-file-input').files = dt.files;
+    const el = document.getElementById('selected-file-name');
+    el.textContent = '📎 ' + f.name;
+    el.style.display = 'block';
+  }
+});
+
+function confirmUpload() {
+  if (!uploadTarget) return;
+  const fileInput = document.getElementById('upload-file-input');
+  
+  // Since we can't upload via API without a token (security), redirect to GitHub upload page
+  const folderPath = `Proyecto_final/${uploadTarget.path}`;
+  const uploadUrl = `${GH_BASE}/upload/${REPO_BRANCH}/${folderPath}`;
+  
+  closeUploadModal();
+  window.open(uploadUrl, '_blank');
+  showToast('Se abrió GitHub para subir el archivo. Después presiona "Sincronizar".', 'info');
+}
+
+// ──────────────────────────────────────────────
+// OPEN GITHUB FOLDER
+// ──────────────────────────────────────────────
+function openGitHubFolder(path) {
+  const url = `${GH_BASE}/tree/${REPO_BRANCH}/Proyecto_final/${path}`;
+  window.open(url, '_blank');
+}
+
+// ──────────────────────────────────────────────
+// LOAD ALL OPEN WEEKS
+// ──────────────────────────────────────────────
+async function loadAllWeeks() {
+  const btn = document.getElementById('btn-refresh-all');
+  btn.classList.add('loading');
+  // Clear cache
+  Object.keys(filesCache).forEach(k => delete filesCache[k]);
+  totalFiles = 0;
+  weeksWithFiles = 0;
+
+  // Open all weeks and load
+  const allWeeks = UNITS.flatMap(u => u.weeks);
+  for (const week of allWeeks) {
+    const card = document.getElementById(`week-card-${week.n}`);
+    if (!card.classList.contains('open')) {
+      card.classList.add('open');
+    }
+    await loadWeekFiles(week.n);
+  }
+
+  btn.classList.remove('loading');
+  showToast(`Sincronización completa — ${totalFiles} archivos encontrados`, 'success');
+}
+
+// ──────────────────────────────────────────────
+// STATS
+// ──────────────────────────────────────────────
+function updateStats() {
+  totalFiles = 0;
+  weeksWithFiles = 0;
+  Object.values(filesCache).forEach(files => {
+    if (files.length > 0) {
+      totalFiles += files.length;
+      weeksWithFiles++;
+    }
+  });
+  document.getElementById('stat-files').textContent = totalFiles;
+  document.getElementById('stat-weeks-with').textContent = weeksWithFiles;
+}
+
+// ──────────────────────────────────────────────
+// TOAST
+// ──────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+  const tc = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  const icons = { success: '✓', error: '✗', info: 'ℹ' };
+  t.innerHTML = `<span>${icons[type]||'•'}</span><span>${msg}</span>`;
+  tc.appendChild(t);
+  setTimeout(() => t.remove(), 4500);
+}
+
+// Close modal on overlay click
+document.getElementById('pdf-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('upload-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeUploadModal();
+});
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+buildUI();
+
+// Auto-load first week of each unit
+setTimeout(() => {
+  [1, 5, 9, 13].forEach(n => {
+    const card = document.getElementById(`week-card-${n}`);
+    if (card) { card.classList.add('open'); loadWeekFiles(n); }
+  });
+}, 300);
+</script>
 </body>
 </html>
